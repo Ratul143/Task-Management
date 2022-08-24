@@ -1,11 +1,7 @@
 package com.surjomukhi.taskmanagement.service.implementation;
 
-import com.surjomukhi.taskmanagement.entity.PlayerEntity;
 import com.surjomukhi.taskmanagement.entity.TaskEntity;
-import com.surjomukhi.taskmanagement.entity.TaskRecordEntity;
 import com.surjomukhi.taskmanagement.exception.RecordNotFoundException;
-import com.surjomukhi.taskmanagement.repository.PlayerRepository;
-import com.surjomukhi.taskmanagement.repository.TaskRecordRepository;
 import com.surjomukhi.taskmanagement.repository.TaskRepository;
 import com.surjomukhi.taskmanagement.request.TaskRequest;
 import com.surjomukhi.taskmanagement.service.TaskService;
@@ -16,8 +12,6 @@ import com.surjomukhi.taskmanagement.utils.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,9 +25,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
-    private TaskRecordRepository taskRecordRepository;
 
     @Autowired
     private CustomCodeGenerator customCodeGenerator;
@@ -51,24 +42,6 @@ public class TaskServiceImpl implements TaskService {
             return new BaseResponse(StatusCode.BAD_REQUEST, "Task" + CustomMessage.SAVE_FAILED_MESSAGE);
         }
         return new BaseResponse(StatusCode.CREATED, "Task" + CustomMessage.SAVE_SUCCESS_MESSAGE);
-    }
-
-    @Override
-    public BaseResponse assignTaskToPlayer(TaskRecordEntity taskRecord) {
-        try {
-            taskRecord.setUuid(customCodeGenerator.getGeneratedUuid());
-            taskRecordRepository.save(taskRecord);
-            log.info("Task Record" + CustomMessage.SAVE_SUCCESS_MESSAGE);
-        } catch (Exception e) {
-            log.info("Task Record Save Error Message" + e.getCause().getCause().getMessage());
-            return new BaseResponse(StatusCode.BAD_REQUEST, "Task Record" + CustomMessage.SAVE_FAILED_MESSAGE);
-        }
-        return new BaseResponse(StatusCode.CREATED, "Task Record" + CustomMessage.SAVE_SUCCESS_MESSAGE);
-    }
-
-    @Override
-    public Page<TaskEntity> getTaskListWithPagination(Pageable pageable) {
-        return taskRepository.findByIsDeletedOrderByCreatedAtDesc(false, pageable);
     }
 
     @Override

@@ -9,7 +9,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,20 +28,25 @@ public class TaskRecordEntity {
     @Column(unique = true, nullable = false, updatable = false)
     private String uuid;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime startTime;
+    @Column( nullable = false)
+    private Date startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime deadline;
+    @Column(nullable = false)
+    private Date endDate;
+
+//    @ManyToMany
+//    @JoinColumn(name = "task_record_id")
+//    private List<PlayerEntity> player = new ArrayList<>();
+
+//    @ManyToOne
+//    @JoinColumn(name = "task_id")
+//    private TaskEntity task;
 
     @ManyToOne
-    @JoinColumn(name = "player_id")
     private PlayerEntity player;
 
     @ManyToOne
-    @JoinColumn(name = "task_id")
-    private
-    TaskEntity task;
+    private TaskEntity task;
 
     private boolean isCompleted = false;
 

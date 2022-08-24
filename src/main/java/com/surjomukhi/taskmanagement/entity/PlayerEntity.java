@@ -8,7 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,4 +46,8 @@ public class PlayerEntity {
     private Date updatedAt;
 
     private String updatedBy;
+
+    @ManyToMany
+    @JoinColumn(name = "player_id")
+    private List<TaskRecordEntity> tasks = new ArrayList<>();
 }

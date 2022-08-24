@@ -9,6 +9,8 @@ import com.surjomukhi.taskmanagement.utils.CustomMessage;
 import com.surjomukhi.taskmanagement.utils.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,5 +37,10 @@ public class PlayerServiceImpl implements PlayerService {
             return new BaseResponse(StatusCode.BAD_REQUEST, "Player" + CustomMessage.SAVE_FAILED_MESSAGE);
         }
         return new BaseResponse(StatusCode.CREATED, "Player" + CustomMessage.SAVE_SUCCESS_MESSAGE);
+    }
+
+    @Override
+    public Page<PlayerEntity> getPlayerListWithPagination(Pageable pageable) {
+        return playerRepository.findByIsActiveOrderByCreatedAtDesc(false, pageable);
     }
 }
