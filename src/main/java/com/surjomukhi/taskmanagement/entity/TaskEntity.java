@@ -8,11 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Date;
 
 @Getter
@@ -37,7 +34,7 @@ public class TaskEntity {
     private String taskBrief;
 
     @Column(nullable = true, length = 655555)
-    private ArrayList<String> attachments;
+    private String attachment;
 
     private boolean isDeleted = false;
 

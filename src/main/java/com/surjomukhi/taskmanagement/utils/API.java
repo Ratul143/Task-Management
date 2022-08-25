@@ -1,6 +1,6 @@
 package com.surjomukhi.taskmanagement.utils;
 
-public class Api {
+public class API {
 
     public static final String SERVER_API = "*";
 

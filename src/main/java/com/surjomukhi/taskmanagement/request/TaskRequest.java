@@ -1,5 +1,6 @@
 package com.surjomukhi.taskmanagement.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class TaskRequest {
 
     private String taskTitle;
     private String taskBrief;
-    private ArrayList<String> attachments;
+    @ApiModelProperty(hidden = true)
+    private String attachment;
 }
